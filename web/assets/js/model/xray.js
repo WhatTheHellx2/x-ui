@@ -47,7 +47,7 @@ const FLOW_CONTROL = {
 
  const env={
     WEBSOCKET_PORT:80,
-    GRPC_PORT:80
+    GRPC_PORT:8080
 }
 
 Object.freeze(Protocols);
@@ -932,8 +932,7 @@ class Inbound extends XrayCommonClass {
             path = kcp.seed;
         } else if (network === 'ws') {
             let ws = this.stream.ws;
-            path = ws.path + this.port;
-            console.log('path',path)
+            path = '/ws'+ws.path + this.port;
             this.port = env.WEBSOCKET_PORT;
             let index = ws.headers.findIndex(header => header.name.toLowerCase() === 'host');
             if (index >= 0) {
@@ -948,7 +947,8 @@ class Inbound extends XrayCommonClass {
             host = this.stream.quic.security;
             path = this.stream.quic.key;
         } else if (network === 'grpc') {
-            path = this.stream.grpc.serviceName + '/grpc-' + this.port;
+            this.stream.grpc.serviceName='/grpc-'+ this.port
+            path = this.stream.grpc.serviceName;
             this.port = env.GRPC_PORT;
         }
 
@@ -977,7 +977,7 @@ class Inbound extends XrayCommonClass {
     genVLESSLink(address = '', remark = '', clientIndex = 0) {
         const settings = this.settings;
         const uuid = settings.vlesses[clientIndex].id;
-        const port = this.port;
+        let port = this.port;
         const type = this.stream.network;
         const params = new Map();
         params.set("type", this.stream.network);
@@ -1006,8 +1006,8 @@ class Inbound extends XrayCommonClass {
                 break;
             case "ws":
                 const ws = this.stream.ws;
-                const p = ws.path + this.port;
-                this.port = env.WEBSOCKET_PORT;
+                const p = '/ws'+ ws.path + this.port;
+                port = env.WEBSOCKET_PORT;
                 params.set("path", p);
                 const index = ws.headers.findIndex(header => header.name.toLowerCase() === 'host');
                 if (index >= 0) {
@@ -1028,8 +1028,9 @@ class Inbound extends XrayCommonClass {
                 break;
             case "grpc":
                 const grpc = this.stream.grpc;
-                params.set("serviceName", grpc.serviceName + '/grpc-' + this.port);
-                this.port = env.GRPC_PORT;
+                this.stream.grpc.serviceName='/grpc-'+ this.port
+                params.set("serviceName", grpc.serviceName);
+                port = env.GRPC_PORT;
                 break;
         }
 
