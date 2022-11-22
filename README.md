@@ -1,5 +1,6 @@
 # x-ui
 
+
 xray panel supporting multi-protocol, **Multi-lang (English,Chinese)**, **IP Restrication Per Inbound**
 
 | Features        | Enable?           |
@@ -14,9 +15,9 @@ xray panel supporting multi-protocol, **Multi-lang (English,Chinese)**, **IP Res
 
 **Feel Free for Donation :** :heart:
 
-TRC20: TDam6uh8ctLJuz8Y3rRk4t5pLikQvtpvJE
+USDT TRC20: `TDam6uh8ctLJuz8Y3rRk4t5pLikQvtpvJE`
 
-ETH: 0x256ddA590c35638fA4B3a25Ec4544Db087ceE826
+Ether ETH: `0x256ddA590c35638fA4B3a25Ec4544Db087ceE826`
 
 # Features
 
@@ -31,18 +32,14 @@ ETH: 0x256ddA590c35638fA4B3a25Ec4544Db087ceE826
 - For more advanced configuration items, please refer to the panel
 
 # Enable IP Restrictions Per Inbound
-1 - open panel settings and tab xray related settings put this to first of json :
+`!!! NO NEED TO DO THIS IF YOU HAVE FRESH INSTALL`
+
+1 - open panel settings and tab xray related settings find `"api": ` and put bellow code just before it :
  ```json
- { 
- ...
- 
  "log": {
     "loglevel": "warning", 
     "access": "./access.log"
-  },
-  
- ...
- "api": ...
+  }, 
 ```
 - change access log path as you want
 
@@ -50,6 +47,8 @@ ETH: 0x256ddA590c35638fA4B3a25Ec4544Db087ceE826
 
 # Enable Multi User Traffic & Exprire Day
 ![Screenshot from 2022-11-15 07-43-58](https://user-images.githubusercontent.com/16622377/201922652-111ff5b8-272b-49f5-a656-d6f57d79eaed.png)
+
+`!!! NO NEED TO DO THIS IF YOU HAVE FRESH INSTALL`
 
 **for enable traffic for users you should do :**
 

@@ -983,6 +983,7 @@ class Inbound extends XrayCommonClass {
         params.set("type", this.stream.network);
         if (this.xtls) {
             params.set("security", "xtls");
+            address = this.stream.tls.server;
         } else {
             params.set("security", this.stream.security);
         }
@@ -997,6 +998,7 @@ class Inbound extends XrayCommonClass {
                         const host = request.headers[index].value;
                         params.set("host", host);
                     }
+                    params.set("headerType", 'http');
                 }
                 break;
             case "kcp":
