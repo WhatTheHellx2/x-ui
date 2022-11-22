@@ -1068,7 +1068,20 @@ class Inbound extends XrayCommonClass {
 
     genTrojanLink(address = '', remark = '', clientIndex = 0) {
         let settings = this.settings;
-        return `trojan://${settings.clients[clientIndex].password}@${address}:${this.port}#${encodeURIComponent(remark)}`;
+        let network = this.stream.network;
+        let path=''
+
+        if (network === 'grpc') {
+            this.stream.grpc.serviceName='/grpc-'+ this.port
+            path = this.stream.grpc.serviceName;
+            this.port = env.GRPC_PORT;
+        }
+        if (this.stream.security === 'tls') {
+            if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
+                address = this.stream.tls.server;
+            }
+        }
+        return `trojan://${settings.clients[clientIndex].password}@${address}:${this.port}?type=${network}#${encodeURIComponent(remark)}`;
     }
 
     genLink(address = '', remark = '', clientIndex = 0) {

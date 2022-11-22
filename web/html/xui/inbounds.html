@@ -179,7 +179,6 @@
         width: 80,
         scopedSlots: {customRender: 'expiry_time'},
     }];
-
     const app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#app',
@@ -336,7 +335,6 @@
                 infoModal.show(dbInbound);
             },
             switchEnable(dbInbound) {
-
                 this.submit(`/xui/api/inbounds/${dbInbound.id}`, {
                     ...dbInbound,
                     settings: btoa(dbInbound.settings.toString()),
@@ -395,7 +393,6 @@
             }
         },
     });
-
 </script>
 {{template "inboundModal"}}
 {{template "promptModal"}}
