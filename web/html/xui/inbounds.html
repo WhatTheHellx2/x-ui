@@ -269,6 +269,10 @@
                 });
             },
             async addInbound(inbound, dbInbound) {
+
+                if(inbound.stream.network==='grpc'){
+                    inbound.stream.grpc.serviceName= 'grpc-' + inbound.port
+                }
                 const data = {
                     up: dbInbound.up,
                     down: dbInbound.down,
@@ -284,6 +288,7 @@
                     stream_settings: btoa(inbound.stream.toString()),
                     sniffing: btoa(inbound.canSniffing() ? inbound.sniffing.toString() : '{}'),
                 };
+
                 await this.submit('/xui/api/inbounds', data, inModal);
             },
             async updateInbound(inbound, dbInbound) {
