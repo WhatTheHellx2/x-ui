@@ -1414,9 +1414,8 @@ Inbound.TrojanSettings = class extends Inbound.Settings {
 };
 Inbound.TrojanSettings.Client = class extends XrayCommonClass {
 
-    constructor(id = RandomUtil.randomUUID(), flow = FLOW_CONTROL.DIRECT, email = '', limitIp = 0, totalGB = 0, expiryTime = '', password = RandomUtil.randomSeq(10)) {
+    constructor(flow = FLOW_CONTROL.DIRECT, email = '', limitIp = 0, totalGB = 0, expiryTime = '', password = RandomUtil.randomSeq(10)) {
         super();
-        this.id = id;
         this.flow = flow;
         this.email = email;
         this.limitIp = limitIp;
@@ -1428,7 +1427,6 @@ Inbound.TrojanSettings.Client = class extends XrayCommonClass {
 
     static fromJson(json = {}) {
         return new Inbound.TrojanSettings.Client(
-            json.id,
             json.flow,
             json.email,
             json.limitIp,

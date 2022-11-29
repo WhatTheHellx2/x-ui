@@ -84,24 +84,15 @@
                 </a-form-item>
 
             </a-form>
-            <a-form-item label="id">
-                <a-input v-model.trim="trojan.id"></a-input>
-            </a-form-item>
-            <a-form-item label='{{ i18n "additional" }} ID'>
-                <a-input type="number" v-model.number="trojan.alterId"></a-input>
-            </a-form-item>
             <a-form-item label="password">
                 <a-input v-model.trim="trojan.password"></a-input>
             </a-form-item>
-
             <a-form-item v-if="inbound.xtls" label="flow">
                 <a-select v-model="inbound.settings.clients[index].flow" style="width: 150px">
                     <a-select-option value="">{{ i18n "none" }}</a-select-option>
                     <a-select-option v-for="key in FLOW_CONTROL" :value="key">[[ key ]]</a-select-option>
                 </a-select>
             </a-form-item>
-
-
             <a-form-item>
             <span slot="label">
                 <span >{{ i18n "pages.inbounds.totalFlow" }}</span>(GB)
