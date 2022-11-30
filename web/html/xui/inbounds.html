@@ -269,6 +269,10 @@
                 });
             },
             async addInbound(inbound, dbInbound) {
+                console.log(inbound)
+                if (inbound.stream.network === "grpc") {
+                    inbound.stream.grpc.serviceName = `grpc-${inbound.port}`
+                }
                 const data = {
                     up: dbInbound.up,
                     down: dbInbound.down,
@@ -276,7 +280,6 @@
                     remark: dbInbound.remark,
                     enable: dbInbound.enable,
                     expiry_time: dbInbound.expiry_time,
-
                     listen: inbound.listen,
                     port: inbound.port,
                     protocol: inbound.protocol,
@@ -284,7 +287,8 @@
                     stream_settings: btoa(inbound.stream.toString()),
                     sniffing: btoa(inbound.canSniffing() ? inbound.sniffing.toString() : '{}'),
                 };
-                await this.submit('/xui/api/inbounds', data, inModal,"post","inbound added");
+
+                await this.submit('/xui/api/inbounds', data, inModal, "post", "inbound added");
             },
             async updateInbound(inbound, dbInbound) {
                 const data = {
@@ -302,7 +306,7 @@
                     stream_settings: btoa(inbound.stream.toString()),
                     sniffing: inbound.canSniffing() ? btoa(inbound.sniffing.toString()) : btoa('{}'),
                 };
-                await this.submit(`/xui/api/inbounds/${dbInbound.id}`, data, inModal, "put","inbound updated");
+                await this.submit(`/xui/api/inbounds/${dbInbound.id}`, data, inModal, "put", "inbound updated");
             },
             resetTraffic(dbInbound) {
                 this.$confirm({
@@ -324,7 +328,7 @@
                     content: '{{ i18n "pages.inbounds.deleteInboundContent"}}',
                     okText: '{{ i18n "delete"}}',
                     cancelText: '{{ i18n "cancel"}}',
-                    onOk: () => this.submit('/xui/api/inbounds/' + dbInbound.id, undefined, undefined, "delete",'inbound deleted successfully'),
+                    onOk: () => this.submit('/xui/api/inbounds/' + dbInbound.id, undefined, undefined, "delete", 'inbound deleted successfully'),
                 });
             },
             showQrcode(dbInbound) {
@@ -340,25 +344,25 @@
                     settings: btoa(dbInbound.settings.toString()),
                     stream_settings: btoa(dbInbound.stream_settings.toString()),
                     sniffing: btoa(dbInbound.sniffing.toString()),
-                }, undefined, "put","inbound updated");
+                }, undefined, "put", "inbound updated");
             },
-            async submit(url, data, modal, method = 'post',message) {
+            async submit(url, data, modal, method = 'post', message) {
                 let msg;
                 switch (method) {
                     case "post":
-                        msg = await HttpUtil.newPostWithModal(url, data, modal,undefined,message);
+                        msg = await HttpUtil.newPostWithModal(url, data, modal, undefined, message);
                         break;
 
                     case "get":
-                        msg = await HttpUtil.newGetWithModal(url, data, modal,undefined,message);
+                        msg = await HttpUtil.newGetWithModal(url, data, modal, undefined, message);
                         break;
 
                     case "delete":
-                        msg = await HttpUtil.newDeleteWithModal(url, data, modal,undefined,message);
+                        msg = await HttpUtil.newDeleteWithModal(url, data, modal, undefined, message);
                         break;
 
                     case "put":
-                        msg = await HttpUtil.newPutWithModal(url, data, modal,undefined,message);
+                        msg = await HttpUtil.newPutWithModal(url, data, modal, undefined, message);
                         break;
 
                     default:

@@ -947,7 +947,6 @@ class Inbound extends XrayCommonClass {
             host = this.stream.quic.security;
             path = this.stream.quic.key;
         } else if (network === 'grpc') {
-            this.stream.grpc.serviceName='grpc-'+ this.port
             path = this.stream.grpc.serviceName;
             this.port = env.GRPC_PORT;
         }
@@ -1030,7 +1029,6 @@ class Inbound extends XrayCommonClass {
                 break;
             case "grpc":
                 const grpc = this.stream.grpc;
-                this.stream.grpc.serviceName='grpc-'+ this.port
                 params.set("serviceName", grpc.serviceName);
                 port = env.GRPC_PORT;
                 break;
@@ -1072,7 +1070,6 @@ class Inbound extends XrayCommonClass {
         let path=''
 
         if (network === 'grpc') {
-            this.stream.grpc.serviceName='grpc-'+ this.port
             path = this.stream.grpc.serviceName;
             this.port = env.GRPC_PORT;
         }
